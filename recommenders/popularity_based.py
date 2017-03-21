@@ -35,7 +35,7 @@ class popularity_based():
         self.mean_ratings = pd.DataFrame(self.mean_ratings).reset_index()
         self.mean_ratings['title'] = self.mean_ratings['movie_id'].map(self.movies.set_index('movie_id')['title'])
 
-    def recommend(self,topu): #no arguement required here, just for the sake of uniformness across other recommender implementations
+    def recommend(self,topu=10): #no arguement required here, just for the sake of uniformness across other recommender implementations
         self.user_id = user_id
         #From = self.c
         #self.c += topu
