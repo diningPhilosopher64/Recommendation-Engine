@@ -1,0 +1,10 @@
+{% extends "movies/base.html" %}
+{% block body %}
+
+<h2>Here are all the movies</h2>
+<ul>
+    {% for picture in all_pictures %}
+    <li><a href="{% url 'movies:detail' picture.id %}">{{ picture.picture_title }} &nbsp;&nbsp;&nbsp; {{ picture.genres }} &nbsp;&nbsp;&nbsp; {{ picture.ratings }}</a></li>
+    {% endfor %}
+</ul> 
+{% endblock %}
