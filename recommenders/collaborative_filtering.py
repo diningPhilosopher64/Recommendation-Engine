@@ -34,9 +34,16 @@ class collaborative_filtering():
         
         
     def compute_svd(self):      
-        selfdata = Data()
-        data.load(ratings_file, sep=',', format={'col':0, 'row':1 ,'value':2, 'ids':float})
-        train , test = data.split_train_test(percent=PERCENT_TRAIN)    
+        self.data = Data()
+        self.data.load(self.ratings_file, sep=',', format={'col':0, 'row':1 ,'value':2, 'ids':float})
+        self.train , self.test = self.data.split_train_test(percent=self.PERCENT_TRAIN)    
         self.svd = SVD()
-        self.svd.set_data(train)    
-        self.svd.compute(k=K, min_values=1, pre_normalize=None, mean_center=True, post_normalize=True)
+        self.svd.set_data(self.train)    
+        self.svd.compute(k=self.K, min_values=1, pre_normalize=None, mean_center=True, post_normalize=True)
+
+    def similarity_measure(self,movie1 , movie2): #gives a similarity measure value between -1 to 1
+	return round(self.svd.similarity(movie1,movie2),4)
+
+
+
+
