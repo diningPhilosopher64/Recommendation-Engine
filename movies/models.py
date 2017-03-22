@@ -8,6 +8,7 @@ class Picture(models.Model):
 	picture_title = models.CharField(max_length=500)
 	genres = models.CharField(max_length=1000)
 	ratings = models.DecimalField(max_digits=10,decimal_places=1)
+	picture_logo = models.ImageField()
 
 	def __str__(self):
         	return self.picture_title
