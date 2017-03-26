@@ -1,10 +1,23 @@
 {% extends "movies/base.html" %}
 {% block body %}
-
-<h2>Here are all the movies</h2>
-<ul>
-    {% for picture in all_pictures %}
-    <li><a href="{% url 'movies:detail' picture.id %}">{{ picture.picture_title }} &nbsp;&nbsp;&nbsp; {{ picture.genres }} &nbsp;&nbsp;&nbsp; {{ picture.ratings }}</a></li>
+<div class="albums-container container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h3>{{ user.username }}'s Movies</h3>
+        </div>
+     
+           {% for picture in all_pictures %}
+              <div class="col-sm-4 col-lg-2">
+                    <div class="thumbnail">
+                       <a href="{% url 'movies:detail' picture.id %}">
+                           <img src="{{ picture.picture_logo.url }}" class="img-responsive"/>
+                        </a>
+                        <div class="caption">
+                            <h3>{{ picture.picture_title }}</h3>
+                        </div>
+                        </div>
+                </div>
+    </div>
     {% endfor %}
-</ul> 
+
 {% endblock %}
