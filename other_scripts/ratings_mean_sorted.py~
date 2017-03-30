@@ -46,7 +46,7 @@ del pp['index']
 
 
 
-print pp[:10]
+
 
 
 pp.to_csv("/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ratings_mean_sorted.csv")

@@ -4,9 +4,13 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .forms import UserForm, PictureForm
-from .popularity import popularity_based
+from django.shortcuts import render
 import numpy as np
 import pandas as pd
+from PIL import Image
+
+
+from popularity_based import Popularity_based
 
 # set some print options
 np.set_printoptions(precision=4)
@@ -16,21 +20,39 @@ pd.set_option('precision', 3, 'notebook_repr_html', True, )
 # init random gen
 np.random.seed(2)
 
-users_file = "/home/iffu/Documents/ratings.csv"
-movies_file = "//home/iffu/Documents/movies.csv"
-users = pd.read_table(users_file, sep=',', header=None, names=['user_id', 'movie_id', 'rating', 'timestamp'])
+
+
+users_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-small/ratings.csv"
+movies_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-small/movies.csv"
+users = pd.read_table(users_file,sep=',', header=None,names = ['user_id','movie_id','rating','timestamp'])
 movies = pd.read_table(movies_file, sep=',')
+imgs = {}
+path = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/"
+
+
+
+
 
 
 def index(request):
     if not request.user.is_authenticated():
         return render(request, 'movies/login.html')
     else:
-        pb = popularity_based(users, movies)
+
+        #moviez = Film.objects.all()
+        #all_pictures = Picture.objects.all()    'all_pictures': all_pictures,
+        #return render(request, 'movies/index.html', { 'moviez': moviez})        
+        pb = Popularity_based(users, movies)
         pb.create()
-        moviez = Film.objects.all()
-        all_pictures = Picture.objects.all()
-        return render(request, 'movies/index.html', {'all_pictures': all_pictures, 'moviez': moviez})
+        top_movies = pb.recommend()
+        for movie in top_movies:
+            img_path = path + movie
+            print(img_path)
+            #imgs.append(img_path)
+            imgs[movie] = img_path
+            
+
+        return render(request, 'movies/index.html', {'top_movies': top_movies, 'imgs':imgs})
 
 
 def detail(request, picture_id):
