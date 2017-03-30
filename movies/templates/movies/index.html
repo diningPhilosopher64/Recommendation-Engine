@@ -3,13 +3,12 @@
 <div class="albums-container container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <h3>{{ user.username }}'s Movies</h3>
-            <h2> Most Popular movies</h2>
+            <h2>Welcome {{ user.username }}'s </h2>
+            <h2>These Most Popular movies</h2>
             {% for movie in moviez %}
                  <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
                            <img src="{{ movie.pop_picture_logo }}" class="img-responsive"/>
-
                         <div class="caption">
                             <h4>{{ movie.film_title }}</h4>
                         </div>

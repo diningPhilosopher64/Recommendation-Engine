@@ -21,6 +21,7 @@ for row in data:
 		picture.picture_title = row[1]
 		picture.genres = row[2]
 		picture.ratings = row[3]
+		picture.picture_logo = row[4]
 		picture.save()
 		
 

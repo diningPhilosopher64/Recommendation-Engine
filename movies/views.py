@@ -41,16 +41,6 @@ def detail(request, picture_id):
         picture = get_object_or_404(Picture, pk=picture_id)
         return render(request, 'movies/detail.html', {'picture': picture, 'user': user})
 
-
-def podetail(request, film_id):
-    if not request.user.is_authenticated():
-        return render(request, 'movies/login.html')
-    else:
-        user = request.user
-        film = get_object_or_404(Film, pk=film_id)
-        return render(request, 'movies/popdetail.html', {'film': film, 'user': user})
-
-
 def login_user(request):
     if request.method == "POST":
         username = request.POST['username']
