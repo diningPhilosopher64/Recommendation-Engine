@@ -35,12 +35,16 @@ class popularity_based():
         self.mean_ratings = pd.DataFrame(self.mean_ratings).reset_index()
         self.mean_ratings['title'] = self.mean_ratings['movie_id'].map(self.movies.set_index('movie_id')['title'])
 
-    def recommend(self,topu=10): #no arguement required here, just for the sake of uniformness across other recommender implementations
-        self.user_id = user_id
-        #From = self.c
-        #self.c += topu
-        #To = self.c        
+    def recommend(self,topu=10):#no arguement required here, just for the sake of uniformness across other recommender implementations
+        #return self.mean_ratings.ix[:topu,'title'].as_matrix(columns = None).tolist()
+        self.mean_ratings = self.mean_ratings.sort(['movie_id'],ascending=True)
+        self.mean_ratings = self.mean_ratings.ix[:,2:3]
+        self.mean_ratings = self.mean_ratings.reset_index()
+        del self.mean_ratings['index']
         return self.mean_ratings.ix[:topu,'title'].as_matrix(columns = None).tolist()
+
+
+
 
 
 
