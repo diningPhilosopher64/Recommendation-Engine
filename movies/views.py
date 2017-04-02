@@ -26,9 +26,11 @@ users_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-s
 movies_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-small/movies.csv"
 users = pd.read_table(users_file,sep=',', header=None,names = ['user_id','movie_id','rating','timestamp'])
 movies = pd.read_table(movies_file, sep=',')
-imgs = {}
-path = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/"
 
+
+pb = Popularity_based(users, movies)
+pb.create()
+top_movies = pb.recommend()
 
 
 
@@ -42,17 +44,10 @@ def index(request):
         #moviez = Film.objects.all()
         #all_pictures = Picture.objects.all()    'all_pictures': all_pictures,
         #return render(request, 'movies/index.html', { 'moviez': moviez})        
-        pb = Popularity_based(users, movies)
-        pb.create()
-        top_movies = pb.recommend()
-        for movie in top_movies:
-            img_path = path + movie
-            print(img_path)
-            #imgs.append(img_path)
-            imgs[movie] = img_path
-            
-
-        return render(request, 'movies/index.html', {'top_movies': top_movies, 'imgs':imgs})
+        #pb = Popularity_based(users, movies)
+        #pb.create()
+        #top_movies = pb.recommend()
+        return render(request, 'movies/index.html', {'top_movies': top_movies})
 
 
 def detail(request, picture_id):
@@ -81,8 +76,7 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                all_pictures = Picture.objects.all()
-                return render(request, 'movies/index.html', {'all_pictures': all_pictures})
+                return render(request, 'movies/index.html', {'top_movies': top_movies})
 
             else:
                 return render(request, 'movies/login.html', {'error_message': 'Your account has been disabled'})
@@ -104,8 +98,7 @@ def register(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                all_pictures = Picture.objects.all()
-                return render(request, 'movies/index.html', {'all_pictures': all_pictures})
+                return render(request, 'movies/index.html', {'top_movies': top_movies})
 
     context = {
         "form": form,
