@@ -7,10 +7,18 @@ from .forms import UserForm, PictureForm
 from django.shortcuts import render
 import numpy as np
 import pandas as pd
-
-
-
 from popularity_based import Popularity_based
+
+import sys 
+import recsys
+import recsys.algorithm
+from recsys.algorithm.factorize import SVD
+from recsys.algorithm.factorize import SVDNeighbourhood
+from recsys.datamodel.data import Data
+import pandas as pd
+from recsys.evaluation.prediction import RMSE,MAE
+recsys.algorithm.VERBOSE = True
+
 
 # set some print options
 np.set_printoptions(precision=4)
