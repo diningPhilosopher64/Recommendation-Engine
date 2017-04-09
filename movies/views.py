@@ -18,6 +18,7 @@ from recsys.datamodel.data import Data
 import pandas as pd
 from recsys.evaluation.prediction import RMSE,MAE
 recsys.algorithm.VERBOSE = True
+from updater import *
 
 
 # set some print options
@@ -27,7 +28,6 @@ np.set_printoptions(suppress=True)
 pd.set_option('precision', 3, 'notebook_repr_html', True, )
 # init random gen
 np.random.seed(2)
-
 
 
 users_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-small/ratings.csv"
@@ -58,12 +58,12 @@ def index(request):
         return render(request, 'movies/index.html', {'top_movies': top_movies})
 
 
-def detail(request, picture_id):
+def detail(request, movie_id):
     if not request.user.is_authenticated():
         return render(request, 'movies/login.html')
     else:
         user = request.user
-        picture = get_object_or_404(Picture, pk=picture_id)
+        #picture = get_object_or_404(Picture, pk=picture_id)
         return render(request, 'movies/detail.html', {'picture': picture, 'user': user})
 
 
