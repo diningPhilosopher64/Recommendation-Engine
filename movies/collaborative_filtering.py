@@ -1,6 +1,6 @@
 #have to give ratings path and not create file everytime ,else new user and their ratings will be lost.
 
-class collaborative_filtering():
+class Collaborative_filtering(object):
     def __init__(self,ratings_file):#No need to pass as ,will be provided in views.py
         self.users = users
         self.movies = movies
