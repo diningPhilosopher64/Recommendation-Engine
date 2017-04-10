@@ -1,15 +1,26 @@
+import sys 
+import recsys
+import recsys.algorithm
+from recsys.algorithm.factorize import SVD
+from recsys.algorithm.factorize import SVDNeighbourhood
+from recsys.datamodel.data import Data
+from recsys.evaluation.prediction import RMSE,MAE
+recsys.algorithm.VERBOSE = True
+
+
+
 #have to give ratings path and not create file everytime ,else new user and their ratings will be lost.
 
 class Collaborative_filtering(object):
-    def __init__(self,ratings_file):#No need to pass as ,will be provided in views.py
-        self.users = users
+    def __init__(self,ratings_file,movies):#No need to pass as ,will be provided in views.py
+        #self.users = users
         self.movies = movies
         self.K = 100
         self.PERCENT_TRAIN = 85
         #Need to provide a default file location for ratings.csv instead of loading everytime.run below 2lines only once 
         #or just provide this file instead.
         #self.users.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index= False)
-        self.ratings_file = "/home/sourabhkondapaka/Desktop/ratingsss.csv"  #Give your path to ratings.csv created from above 2 lines.
+        self.ratings_file = ratings_file  #Give your path to ratings.csv created from above 2 lines.
         self.data = None
         self.svd = None
         self.movie_list = None

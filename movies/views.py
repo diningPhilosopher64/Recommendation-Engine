@@ -53,7 +53,7 @@ pb.create()
 top_movies = pb.recommend()
 
 #Collaborative_filtering code
-cf = Collaborative_filtering(ratings_file)
+cf = Collaborative_filtering(ratings_file,movies)
 cf.compute_svd()
 
 #Details of movie code
@@ -70,12 +70,6 @@ url = "http://www.omdbapi.com/?t="
     u'Language', u'Country', u'BoxOffice', u'Runtime',
      u'imdbID', u'Metascore', u'Response', u'Year']
 '''
-
-
-
-
-
-
 
 
 
