@@ -10,14 +10,7 @@ import pandas as pd
 from popularity_based import Popularity_based
 from collaborative_filtering import Collaborative_filtering
 
-import sys 
-import recsys
-import recsys.algorithm
-from recsys.algorithm.factorize import SVD
-from recsys.algorithm.factorize import SVDNeighbourhood
-from recsys.datamodel.data import Data
-from recsys.evaluation.prediction import RMSE,MAE
-recsys.algorithm.VERBOSE = True
+
 from updater import *
 
 import imdb
