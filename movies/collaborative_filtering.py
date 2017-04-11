@@ -42,14 +42,21 @@ class Collaborative_filtering(object):
     
     def recommend_movies(self,user_id):
         l =  self.svd.recommend(user_id, n=10, only_unknowns=True, is_row=False)
-        self.movie_list = []
+        self.movies_list = []
+        self.movies_ids = []
         for p in l:
-            movies.ix[movies['movie_id']== p[0]]['title']
+            #movie names
             bb = str(movies.ix[movies['movie_id'] == p[0] ]['title']).split()    
             q = bb.index('Name:')
             bb = ' '.join(bb[1:q])
-            self.movie_list.append(bb)            
-        return self.movie_list
+            self.movies_list.append(bb) 
+            #movie ids
+            gg = movies.ix[movies['movie_id'] == p[0]]
+            gg = gg.reset_index()
+            del gg['index']
+            gg = gg.ix[:,0:2].as_matrix(columns = None).tolist()
+            self.movies_ids.append(gg[0][0])
+        return self.movies_list,self.movies_ids
     
     
     def get_similar_movies(self,movie1):#Returns a PYTHON list for similar movies.
@@ -57,7 +64,6 @@ class Collaborative_filtering(object):
         movie_list = []
         l = l[2:]
         for p in l:
-            movies.ix[movies['movie_id']== p[0]]['title']
             bb = str(movies.ix[movies['movie_id'] == p[0] ]['title']).split()    
             q = bb.index('Name:')
             bb = ' '.join(bb[1:q])
