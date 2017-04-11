@@ -46,6 +46,13 @@ pb = Popularity_based(users, movies)
 pb.create()
 top_movies = pb.recommend()
 
+top_movies_names  = []
+top_movies_ids  = []
+
+for movie in top_movies:
+    top_movies_names.append(movie[1])
+    top_movies_ids.append(movie[0])
+
 #Collaborative_filtering code
 cf = Collaborative_filtering(ratings_file,movies)
 cf.compute_svd()
@@ -78,12 +85,7 @@ def index(request):
         #pb = Popularity_based(users, movies)
         #pb.create()
         #top_movies = pb.recommend()
-        top_movies_names  = []
-        top_movies_ids  = []
 
-        for movie in top_movies:
-            top_movies_names.append(movie[1])
-            top_movies_ids.append(movie[0])
 
         return render(request, 'movies/index.html', {'data': zip(top_movies_names, top_movies_ids)})
 
@@ -139,7 +141,7 @@ def login_user(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'movies/index.html', {'top_movies': top_movies})
+                return render(request, 'movies/index.html', {'data': zip(top_movies_names, top_movies_ids)})
 
             else:
                 return render(request, 'movies/login.html', {'error_message': 'Your account has been disabled'})
@@ -161,7 +163,7 @@ def register(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return render(request, 'movies/index.html', {'top_movies': top_movies})
+                return render(request, 'movies/index.html', {'data': zip(top_movies_names, top_movies_ids)})
 
     context = {
         "form": form,
