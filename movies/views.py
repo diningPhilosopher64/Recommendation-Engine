@@ -119,8 +119,8 @@ def detail(request, movie_id):
         genre = jsontopython['Genre']
 
         #movies similar to this movie.
-        similar_movies = cf.get_similar_movies(movie_id)
-        return render(request, 'movies/detail.html', {'similar_movies':similar_movies,'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
+        similar_movies,similar_ids = cf.get_similar_movies(movie_id)
+        return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
 
 
 def podetail(request, film_id):
