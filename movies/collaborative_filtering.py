@@ -1,15 +1,3 @@
-import sys 
-import recsys
-import recsys.algorithm
-from recsys.algorithm.factorize import SVD
-from recsys.algorithm.factorize import SVDNeighbourhood
-from recsys.datamodel.data import Data
-from recsys.evaluation.prediction import RMSE,MAE
-recsys.algorithm.VERBOSE = True
-
-
-
-#have to give ratings path and not create file everytime ,else new user and their ratings will be lost.
 
 class Collaborative_filtering(object):
     def __init__(self,ratings_file,movies):#No need to pass as ,will be provided in views.py
@@ -23,7 +11,12 @@ class Collaborative_filtering(object):
         self.ratings_file = ratings_file  #Give your path to ratings.csv created from above 2 lines.
         self.data = None
         self.svd = None
-        self.movie_list = None
+        self.recommend_movies_list = None
+        self.recommend_movies_ids = None
+        self.similar_movies_list = None
+        self.similar_movies_ids = None
+        
+        self.movie_id = None
         self.train = None
         self.test = None
 
@@ -42,31 +35,36 @@ class Collaborative_filtering(object):
     
     def recommend_movies(self,user_id):
         l =  self.svd.recommend(user_id, n=10, only_unknowns=True, is_row=False)
-        self.movies_list = []
-        self.movies_ids = []
+        self.recommend_movies_list = []
+        self.recommend_movies_ids = []
         for p in l:
             #movie names
             bb = str(movies.ix[movies['movie_id'] == p[0] ]['title']).split()    
             q = bb.index('Name:')
             bb = ' '.join(bb[1:q])
-            self.movies_list.append(bb) 
+            self.recommend_movies_list.append(bb) 
             #movie ids
             gg = movies.ix[movies['movie_id'] == p[0]]
             gg = gg.reset_index()
             del gg['index']
             gg = gg.ix[:,0:2].as_matrix(columns = None).tolist()
-            self.movies_ids.append(gg[0][0])
-        return self.movies_list,self.movies_ids
-    
+            self.recommend_movies_ids.append(gg[0][0])
+        return self.recommend_movies_list,self.recommend_movies_ids
     
     def get_similar_movies(self,movie1):#Returns a PYTHON list for similar movies.
         l = self.svd.similar(movie1)
-        movie_list = []
+        self.similar_movies_list = []
+        self.similar_movies_ids = []
         l = l[2:]
+        
         for p in l:
+            #getting movie names
             bb = str(movies.ix[movies['movie_id'] == p[0] ]['title']).split()    
             q = bb.index('Name:')
             bb = ' '.join(bb[1:q])
-            movie_list.append(bb)            
-        return movie_list
+            self.similar_movies_list.append(bb)   
+            #getting movie id's
+            self.similar_movies_ids.append(p[0])
+            
+        return self.similar_movies_list,self.similar_movies_ids
     
