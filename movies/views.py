@@ -77,7 +77,14 @@ def index(request):
         #pb = Popularity_based(users, movies)
         #pb.create()
         #top_movies = pb.recommend()
-        return render(request, 'movies/index.html', {'top_movies': top_movies})
+        top_movies_names  = []
+        top_movies_ids  = []
+
+        for movie in top_movies:
+            top_movies_names.append(movie[1])
+            top_movies_ids.append(movie[0])
+
+        return render(request, 'movies/index.html', {'top_movies_names': top_movies_names,'top_movies_ids': top_movies_ids})
 
 
 def detail(request, movie_id):
