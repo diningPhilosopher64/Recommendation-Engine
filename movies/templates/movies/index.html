@@ -10,7 +10,9 @@
             {% for movie,id in data %}
                  <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
+                       <a href="{% url 'movies:detail' id %}">
                           <img src="{% static "movies/images/images2/" %}{{ movie }}" alt="Hi!" class="img-responsive" />
+                       </a>
                         <div class="caption">
                             <h4>{{ movie }}</h4>
                             <h4>the movie id of this movie is {{ id }} </h4>

@@ -9,6 +9,7 @@ import numpy as np
 import pandas as pd
 from popularity_based import Popularity_based
 from collaborative_filtering import Collaborative_filtering
+from django.core.urlresolvers import resolve
 
 
 from updater import *
@@ -92,9 +93,14 @@ def detail(request, movie_id):
         return render(request, 'movies/login.html')
     else:
         user = request.user
+        current_url = resolve(request.path_info).url_name
+        print "\n\n \n \n",current_url
+        ids = current_url.rsplit('/')
+        print ids
+        
         #picture = get_object_or_404(Picture, pk=picture_id)
         #getting details from omdbapi
-        bb = str(movies.ix[movies['movie_id'] == movie_id ]['title']).split()    
+        bb = str(movies.ix[movies['movie_id'] == int(movie_id) ]['title']).split()    
         q = bb.index('Name:')
         bb = ' '.join(bb[1:q])
         item = ia.search_movie(bb)[0]
@@ -119,17 +125,10 @@ def detail(request, movie_id):
         genre = jsontopython['Genre']
 
         #movies similar to this movie.
-        similar_movies,similar_ids = cf.get_similar_movies(movie_id)
+        similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
         return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
+        #return render(request,'movies/detail.html',{'plot':awards})
 
-
-def podetail(request, film_id):
-    if not request.user.is_authenticated():
-        return render(request, 'movies/login.html')
-    else:
-        user = request.user
-        film = get_object_or_404(Film, pk=film_id)
-        return render(request, 'movies/popdetail.html', {'film': film, 'user': user})
 
 
 def login_user(request):

@@ -1,3 +1,21 @@
+import sys 
+import recsys
+import recsys.algorithm
+from recsys.algorithm.factorize import SVD
+from recsys.algorithm.factorize import SVDNeighbourhood
+from recsys.datamodel.data import Data
+from recsys.evaluation.prediction import RMSE,MAE
+import numpy as np
+import pandas as pd
+recsys.algorithm.VERBOSE = True
+movies_file = "/media/sourabhkondapaka/Sourabh's/main_project/sandbox/ml-latest-small/movies.csv"
+movies = pd.read_table(movies_file, sep=',')
+movies.columns = ['movie_id','title','genres']
+ratings_file = "/home/sourabhkondapaka/Desktop/ratingsss.csv"
+
+
+
+
 
 class Collaborative_filtering(object):
     def __init__(self,ratings_file,movies):#No need to pass as ,will be provided in views.py
