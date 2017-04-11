@@ -38,10 +38,13 @@ class Popularity_based(object):
     def recommend(self,topu=100):#no arguement required here, just for the sake of uniformness across other recommender implementations
         #return self.mean_ratings.ix[:topu,'title'].as_matrix(columns = None).tolist()
         self.mean_ratings = self.mean_ratings.sort(['rating'],ascending=False)
-        self.mean_ratings = self.mean_ratings.ix[:,2:3]
+        #df = df[['mean', '0', '1', '2', '3']]
+        self.mean_ratings = self.mean_ratings[['movie_id','title','rating']]        
         self.mean_ratings = self.mean_ratings.reset_index()
-        del self.mean_ratings['index']
-        return self.mean_ratings.ix[:topu,'title'].as_matrix(columns = None).tolist()
+        del self.mean_ratings['index']       
+        gg = self.mean_ratings.ix[:topu,0:2].as_matrix(columns = None).tolist()        
+        return gg
+
 
 
 
