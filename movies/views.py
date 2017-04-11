@@ -84,7 +84,7 @@ def index(request):
             top_movies_names.append(movie[1])
             top_movies_ids.append(movie[0])
 
-        return render(request, 'movies/index.html', {'top_movies_names': top_movies_names,'top_movies_ids': top_movies_ids})
+        return render(request, 'movies/index.html', {'data': zip(top_movies_names, top_movies_ids)})
 
 
 def detail(request, movie_id):

@@ -7,12 +7,13 @@
         <div class="col-sm-12">
             <h2>Welcome {{ user.username }}'s </h2>
             <h2>These Most Popular movies</h2>
-            {% for movie in top_movies %}
+            {% for movie,id in data %}
                  <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
-                          <img src="{% static "movies/images/images2/" %}{{movie}}" alt="Hi!" class="img-responsive" />
+                          <img src="{% static "movies/images/images2/" %}{{ movie }}" alt="Hi!" class="img-responsive" />
                         <div class="caption">
                             <h4>{{ movie }}</h4>
+                            <h4>the movie id of this movie is {{ id }} </h4>
                         </div>
                         </div>
                 </div>
