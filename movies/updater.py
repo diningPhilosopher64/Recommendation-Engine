@@ -28,25 +28,36 @@ def check_user(user_id): # Returns true if user already exists.
 
 
 def rate_movie(user_id , movie_id , rating_value):
-    pc = ratings.movie_id[ratings.user_id == user_id]  # gets all the movies rated by this user
-    ad = pc.tolist() #converts to list
-    s = 0
-    # This loop finds the exact location in the table to store the rating.
-    for p in ad:
-        if movie_id < p:
-            s =  ad.index(p)
-            break
-    #Splits the table at this point.
-    seperate = list(pc[pc == s].index)[0]
-    #The row which will be added to the table.
-    bla = [user_id,movie_id,rating_value,665345]
-    #Splitting the table
-    pq = ratings[:seperate+1]
-    rs = ratings[seperate+1:len(ratings)]
-    pq.loc[len(pq)] = bla
-    pq.index = pq.index + 1
-    pq = pq.append(rs , ignore_index=True)
-    pq.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)
+        bla = [user_id,movie_id,rating_value,665345]
+        pc = ratings.movie_id[ratings.user_id == user_id]  # gets all the movies rated by this user
+        ad = pc.tolist()
+        if user_id == get_last_user_id() and movie_id < ad[-1]:
+            pc = ratings.movie_id[ratings.user_id == user_id]  # gets all the movies rated by this user
+            #print "pc value is",pc,type(pc)         
+            ad = pc.tolist() #converts to list
+            ad.sort()
+            #print "ad value is",ad,type(ad)
+            
+            s = 0
+            # This loop finds the exact location in the table to store the rating.
+            for p in ad:
+                if movie_id < p:
+                    s =  ad.index(p)
+                    break
+            seperate = pc[pc == ad[s]]
+            seperation = seperate.index[0]            
+            top_half = ratings[:seperation]
+            lower_half = ratings[seperation:]
+            top_half.loc[len(top_half)] = bla
+            top_half.index = top_half + 1
+            top_half = top_half.append(lower_half,ignore_index = True)
+            top_half.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)  
+        else:
+            pc = ratings.movie_id[ratings.user_id == user_id] 
+            ad = pc.tolist() #converts to list
+            if movie_id > ad[-1]:
+                ratings.loc[len(ratings)]= bla
+                ratings.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)
 
 
 def rated_movies(user_id): # Gets all the movies rated by a particular user.
