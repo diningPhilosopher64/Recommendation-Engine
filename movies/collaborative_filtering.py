@@ -70,6 +70,7 @@ class Collaborative_filtering(object):
         return self.recommend_movies_list,self.recommend_movies_ids
     
     def get_similar_movies(self,movie1):#Returns a PYTHON list for similar movies.
+        movie1 = int(movie1)
         l = self.svd.similar(movie1)   
         self.similar_movies_list = []
         self.similar_movies_ids = []

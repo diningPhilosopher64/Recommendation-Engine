@@ -10,6 +10,7 @@ import pandas as pd
 from popularity_based import Popularity_based
 from collaborative_filtering import Collaborative_filtering
 from django.core.urlresolvers import resolve
+import unicodedata
 
 
 from updater import *
@@ -91,6 +92,13 @@ def index(request):
 
 
 def detail(request, movie_id):
+    #v = request.POST.get('rate')  
+    #value = v.encode("utf-8")
+    if(request.GET.get('mybtn')):
+        val =  float(request.GET.get('rate'))
+        print "value in val is \n\n\n\n",val
+        rate_movie(request.user.id + 671,movie_id,val) 
+
     if not request.user.is_authenticated():
         return render(request, 'movies/login.html')
     else:
@@ -101,13 +109,11 @@ def detail(request, movie_id):
         q = bb.index('Name:')
         bb = ' '.join(bb[1:q])
         item = ia.search_movie(bb)[0]
-        print("Name in item is " + str(item))
         name = str(item)        
         ll = name.split()
         #ll = '+'.join(ll)
         movie_url = url + '+'.join(ll)
         movie_url += "&plot=full"
-        print movie_url
         content = urllib2.urlopen(movie_url).read()
         jsontopython = json.loads(content)
 
@@ -120,14 +126,14 @@ def detail(request, movie_id):
         awards = jsontopython['Awards']
         runtime = jsontopython['Runtime']
         genre = jsontopython['Genre']
-        print "genre is \n\n",genre
-
         #movies similar to this movie.
-        similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
+        similar_movies,similar_ids = cf.get_similar_movies(1) 
         for mov in similar_movies:
             print mov
-        return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
-        #return render(request,'movies/detail.html',{'plot':plot})
+        #return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
+        return render(request,'movies/detail.html',{'plot':plot})
+
+
 
 
 

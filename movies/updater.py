@@ -30,6 +30,8 @@ def check_user(user_id): # Returns true if user already exists.
 
 
 def rate_movie(user_id , movie_id , rating_value):
+        movie_id = int(movie_id)
+        rating_value = float(rating_value)
         bla = [user_id,movie_id,rating_value,665345]
         
         if check_user(user_id):
