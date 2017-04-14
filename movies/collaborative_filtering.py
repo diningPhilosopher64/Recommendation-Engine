@@ -46,7 +46,7 @@ class Collaborative_filtering(object):
         self.train , self.test = self.data.split_train_test(percent=self.PERCENT_TRAIN)    
         self.svd = SVDNeighbourhood()
         self.svd.set_data(self.train)    
-        self.svd.compute(k=self.K, min_values=1, pre_normalize=None, mean_center=True, post_normalize=True)
+        self.svd.compute(k=self.K, min_values=1, pre_normalize=None, mean_center=False, post_normalize=True)
 
     def similarity_measure(self,movie1 , movie2): #gives a similarity measure value between -1 to 1
         return round(self.svd.similarity(movie1,movie2),4)
@@ -70,10 +70,10 @@ class Collaborative_filtering(object):
         return self.recommend_movies_list,self.recommend_movies_ids
     
     def get_similar_movies(self,movie1):#Returns a PYTHON list for similar movies.
-        l = self.svd.similar(movie1)
+        l = self.svd.similar(movie1)   
         self.similar_movies_list = []
         self.similar_movies_ids = []
-        l = l[2:]
+        l = l[1:]
         
         for p in l:
             #getting movie names

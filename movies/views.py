@@ -95,11 +95,6 @@ def detail(request, movie_id):
         return render(request, 'movies/login.html')
     else:
         user = request.user
-        current_url = resolve(request.path_info).url_name
-        print "\n\n \n \n",current_url
-        ids = current_url.rsplit('/')
-        print ids
-        
         #picture = get_object_or_404(Picture, pk=picture_id)
         #getting details from omdbapi
         bb = str(movies.ix[movies['movie_id'] == int(movie_id) ]['title']).split()    
@@ -125,11 +120,14 @@ def detail(request, movie_id):
         awards = jsontopython['Awards']
         runtime = jsontopython['Runtime']
         genre = jsontopython['Genre']
+        print "genre is \n\n",genre
 
         #movies similar to this movie.
         similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
+        for mov in similar_movies:
+            print mov
         return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
-        #return render(request,'movies/detail.html',{'plot':awards})
+        #return render(request,'movies/detail.html',{'plot':plot})
 
 
 
