@@ -176,3 +176,8 @@ def logout_user(request):
         "form": form,
     }
     return render(request, 'movies/login.html', context)
+
+def request_page(request):
+    users_id = request.user.id + 671
+    if(request.POST.post('mybtn')):
+        updater.rate_movie(672,6251,float(request.POST.post('rate')))

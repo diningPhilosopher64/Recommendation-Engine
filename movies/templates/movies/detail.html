@@ -6,6 +6,11 @@
 {% block body %}
 
  <h4>Hai this is the details page for the movies {{ plot }}</h4>
+ <form action="#" method="post">
+     {% csrf_token %}
+  Ratings: <input type="number" name="rate" step="0.1" min="1" max="5"><br>
+  <input type="submit" value="Submit" name="mybtn">
+</form>
 
                {% for movie,id in data %}
                  <div class="col-sm-4 col-lg-2">
