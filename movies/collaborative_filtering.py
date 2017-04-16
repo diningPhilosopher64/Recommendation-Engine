@@ -40,13 +40,23 @@ class Collaborative_filtering(object):
 
         
         
-    def compute_svd(self):      
-        self.data = Data()
+    def compute_svd(self):  
+        '''    
+        ratings = pd.read_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index_col= False)
+        ratings = ratings.ix[1:]
+        ratings.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)
+        self.data = Data()      
         self.data.load(self.ratings_file, sep=',', format={'col':0, 'row':1 ,'value':2, 'ids':float})
         self.train , self.test = self.data.split_train_test(percent=self.PERCENT_TRAIN)    
+        self.svd = SVD()
+        self.svd.set_data(self.train)    
+        self.svd.compute(k=self.K, min_values=1, pre_normalize=None, mean_center=True, post_normalize=True)'''
+        self.data = Data()
+        self.data.load(self.ratings_file, sep=',', format={'col':0, 'row':1 ,'value':2, 'ids':float})
+        self.train ,self.test = self.data.split_train_test(percent=85)    
         self.svd = SVDNeighbourhood()
         self.svd.set_data(self.train)    
-        self.svd.compute(k=self.K, min_values=1, pre_normalize=None, mean_center=False, post_normalize=True)
+        self.svd.compute(k=100, min_values=1, pre_normalize=None, mean_center=False, post_normalize=True)
 
     def similarity_measure(self,movie1 , movie2): #gives a similarity measure value between -1 to 1
         return round(self.svd.similarity(movie1,movie2),4)

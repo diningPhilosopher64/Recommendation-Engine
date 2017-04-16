@@ -42,6 +42,11 @@ movies = pd.read_table(movies_file, sep=',')
 movies.columns = ['movie_id','title','genres']
 ratings_file = "/home/sourabhkondapaka/Desktop/ratingsss.csv"
 
+#Collaborative_filtering code
+cf = Collaborative_filtering(ratings_file,movies)
+cf.compute_svd()
+
+
 #Popularity_based code
 pb = Popularity_based(users, movies)
 pb.create()
@@ -54,9 +59,7 @@ for movie in top_movies:
     top_movies_names.append(movie[1])
     top_movies_ids.append(movie[0])
 
-#Collaborative_filtering code
-cf = Collaborative_filtering(ratings_file,movies)
-cf.compute_svd()
+
 
 #Details of movie code
 ia = imdb.IMDb()
@@ -127,11 +130,11 @@ def detail(request, movie_id):
         runtime = jsontopython['Runtime']
         genre = jsontopython['Genre']
         #movies similar to this movie.
-        #similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
+        similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
         #for mov in similar_movies:
         #   print mov
-        #return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
-        return render(request,'movies/detail.html',{'plot':plot})
+        return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
+        #return render(request,'movies/detail.html',{'plot':plot})
 
 
 
