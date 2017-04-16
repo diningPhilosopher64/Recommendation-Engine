@@ -97,7 +97,7 @@ def detail(request, movie_id):
     if(request.GET.get('mybtn')):
         val =  float(request.GET.get('rate'))
         print "value in val is \n\n\n\n",val
-        rate_movie(request.user.id + 671,movie_id,val) 
+        rate_movie(int(request.user.id) + 671,movie_id,val) 
 
     if not request.user.is_authenticated():
         return render(request, 'movies/login.html')
@@ -127,11 +127,11 @@ def detail(request, movie_id):
         runtime = jsontopython['Runtime']
         genre = jsontopython['Genre']
         #movies similar to this movie.
-        similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
-        for mov in similar_movies:
-            print mov
-        return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
-        #return render(request,'movies/detail.html',{'plot':plot})
+        #similar_movies,similar_ids = cf.get_similar_movies(int(movie_id)) 
+        #for mov in similar_movies:
+        #   print mov
+        #return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
+        return render(request,'movies/detail.html',{'plot':plot})
 
 
 

@@ -32,10 +32,11 @@ def check_user(user_id): # Returns true if user already exists.
 def rate_movie(user_id , movie_id , rating_value):
         movie_id = int(movie_id)
         rating_value = float(rating_value)
-        bla = [user_id,movie_id,rating_value,665345]
+        bla = [user_id,movie_id,rating_value,11111]
         
         if check_user(user_id):
             print "user exists"
+            print "user id is ",user_id
             pc = ratings.movie_id[ratings.user_id == user_id]  # gets all the movies rated by this user
             ad = pc.tolist()
             for a in ad:
@@ -69,8 +70,11 @@ def rate_movie(user_id , movie_id , rating_value):
                     
         else:
             print "user does not exist"
-            ratings.loc[len(ratings)] = bla
-            ratings.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False) 
+            #ratings.loc[len(ratings)] = bla
+            #ratings.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)
+            with open(r'name', 'a') as f:
+                writer = csv.writer(f)
+                writer.writerow(bla)
 
 
 def rated_movies(user_id): # Gets all the movies rated by a particular user.
