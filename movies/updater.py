@@ -72,7 +72,7 @@ def rate_movie(user_id , movie_id , rating_value):
             print "user does not exist"
             #ratings.loc[len(ratings)] = bla
             #ratings.to_csv("/home/sourabhkondapaka/Desktop/ratingsss.csv",index = False)
-            with open(r'name', 'a') as f:
+            with open(ratings_file, 'ab') as f:
                 writer = csv.writer(f)
                 writer.writerow(bla)
 
