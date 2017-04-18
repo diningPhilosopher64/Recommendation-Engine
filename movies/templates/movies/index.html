@@ -5,8 +5,10 @@
 <div class="albums-container container-fluid">
     <div class="row">
         <div class="col-sm-12">
-            <h2>Welcome {{ user.username }}'s </h2>
-            <h2>These  are the most Popular movies</h2>
+        <center>
+            <h2>Welcome {{ user.username }} </h2>
+            <h2> <a href="{% url 'movies:recommend' %}">Click here to get recommend Movies for you </a></h2>
+            <h2>These  are the most Popular movies  </center>
             {% for movie,id in data %}
                  <div class="col-sm-4 col-lg-2">
                     <div class="thumbnail">
@@ -14,13 +16,12 @@
                           <img src="{% static "movies/images/images2/" %}{{ movie }}" alt="Hi!" class="img-responsive" />
                        </a>
                         <div class="caption">
-                            <h4>{{ movie }}</h4>
-                            <h4>the movie id of this movie is {{ id }} </h4>
+                            <h5>{{ movie }}</h5>
                         </div>
-                        </div>
+                    </div>
                 </div>
             {% endfor %}
         </div>
-            
+    </div>
 </div>
 {% endblock %}

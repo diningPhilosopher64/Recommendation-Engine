@@ -136,6 +136,12 @@ def detail(request, movie_id):
         return render(request, 'movies/detail.html', {'data':zip(similar_movies,similar_ids), 'plot':plot,'writers':writers,'producers':producers, 'actors':actors,'director':director,'awards':awards,'runtime':runtime,'genre':genre})
         #return render(request,'movies/detail.html',{'plot':plot})
 
+def recommend(request):
+    cur_usr = (request.user.id) + 671
+    reco_movies , reco_ids =  cf.recommend_movies(cur_usr)
+    return render(request, 'movies/recommend.html',{'data': zip(reco_movies, reco_ids)})
+
+
 
 
 
