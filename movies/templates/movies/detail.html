@@ -1,11 +1,18 @@
-
-{% block title %}Movie Details{% endblock %}
+{% extends "movies/base.html" %}
 {% load static %}
-
-
+{% block title %}Movie Details{% endblock %}
 {% block body %}
-
- <h4>Hai this is the details page for the movies {{ plot }}</h4>
+ <h4>Details for the movie</h4>
+    <p>{{ plot }}</p>
+    <center>
+    <h6>Writers: {{ writers }}</h6>
+    <h6>Producers: {{ producers }}</h6>
+    <h6>Actors: {{ actors }}</h6>
+    <h6>Director: {{ director }}</h6>
+    <h6>Awards: {{ awards }}</h6>
+    <h6>Runtime: {{ runtime }}</h6>
+    <h6>Genre: {{ genre }}</h6>
+    </center>
  <form action="#" method="GET" name="rate_movie">
      {% csrf_token %}
   Ratings: <input type="number" name="rate" step="0.1" min="1" max="5"><br>
@@ -28,6 +35,7 @@
 
 
 {% endblock %}
+
 
 
 
