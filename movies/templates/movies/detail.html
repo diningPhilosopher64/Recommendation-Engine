@@ -20,14 +20,15 @@
 </form>
 
                {% for movie,id in data %}
-                 <div class="col-sm-4 col-lg-2">
+                 <div class="col-sm-2 col-lg-1">
+                   <div class="style_prevu_kit">
                     <div class="thumbnail">
                        <a href="{% url 'movies:detail' id %}">
-                          <img src="{% static "movies/images/images2/" %}{{ movie }}" alt="Hi!" class="img-responsive" />
+                          <img src="{% static "movies/images/images2/" %}{{ movie }}" alt="Hi!" class="img-responsive" height="300" width="350"/>
                        </a>
                         <div class="caption">
                             <h4>{{ movie }}</h4>
-                            <h4>the movie id of this movie is {{ id }} </h4>
+                        </div>
                         </div>
                         </div>
                 </div>
