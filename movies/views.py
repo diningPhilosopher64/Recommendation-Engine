@@ -76,6 +76,8 @@ url = "http://www.omdbapi.com/?t="
      u'imdbID', u'Metascore', u'Response', u'Year']
 '''
 
+def recommendz(request):
+    return
 
 
 def index(request):
@@ -138,8 +140,16 @@ def detail(request, movie_id):
 
 def recommend(request):
     cur_usr = (request.user.id) + 671
-    reco_movies , reco_ids =  cf.recommend_movies(cur_usr)
-    return render(request, 'movies/recommend.html',{'data': zip(reco_movies, reco_ids)})
+    pc = ratings.movie_id[ratings.user_id == cur_usr]  # gets all the movies rated by this user
+    ad = pc.tolist()    
+    if  any(ratings['user_id'] == cur_usr):
+        if not ad:
+            reco_movies , reco_ids =  cf.recommend_movies(cur_usr)
+            return render(request, 'movies/recommend.html',{'data': zip(reco_movies, reco_ids)})
+
+    else:
+        return render(request, 'movies/recommend2.html',{})
+
 
 
 
