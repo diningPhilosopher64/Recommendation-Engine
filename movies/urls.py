@@ -11,4 +11,5 @@ urlpatterns = [
    url(r'^(?P<movie_id>[0-9]+)/$', views.detail, name='detail'),
    url(r'^logout_user/$', views.logout_user, name='logout_user'),
    url(r'^recommend/$', views.recommend, name='recommend'),
+   url(r'^recommend2/$', views.recommendz, name='recommend2'),
 ]
